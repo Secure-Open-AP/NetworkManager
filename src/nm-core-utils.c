@@ -4302,3 +4302,10 @@ skip:
 	return result;
 }
 
+/*****************************************************************************/
+
+NM_UTILS_LOOKUP_STR_DEFINE (nm_activation_type_to_string, NMActivationType,
+	NM_UTILS_LOOKUP_DEFAULT_WARN ("(unknown)"),
+	NM_UTILS_LOOKUP_STR_ITEM (NM_ACTIVATION_TYPE_FULL,   "full"),
+	NM_UTILS_LOOKUP_STR_ITEM (NM_ACTIVATION_TYPE_ASSUME, "assume"),
+);

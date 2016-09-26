@@ -56,8 +56,6 @@ typedef struct _NMActiveConnectionPrivate {
 
 	NMActiveConnection *parent;
 
-	gboolean assumed;
-
 	NMAuthChain *chain;
 	const char *wifi_shared_permission;
 	NMActiveConnectionAuthResultFunc result_func;
@@ -566,10 +564,8 @@ nm_active_connection_set_device (NMActiveConnection *self, NMDevice *device)
 		g_signal_connect (device, "notify::" NM_DEVICE_METERED,
 		                  G_CALLBACK (device_metered_changed), self);
 
-		if (!priv->assumed) {
-			priv->pending_activation_id = g_strdup_printf ("activation::%p", (void *)self);
-			nm_device_add_pending_action (device, priv->pending_activation_id, TRUE);
-		}
+		priv->pending_activation_id = g_strdup_printf ("activation::%p", (void *)self);
+		nm_device_add_pending_action (device, priv->pending_activation_id, TRUE);
 	} else {
 		/* The ActiveConnection's device can only be cleared after the
 		 * connection is activated.
@@ -710,26 +706,6 @@ nm_active_connection_set_master (NMActiveConnection *self, NMActiveConnection *m
 	                  self);
 
 	check_master_ready (self);
-}
-
-void
-nm_active_connection_set_assumed (NMActiveConnection *self, gboolean assumed)
-{
-	NMActiveConnectionPrivate *priv = NM_ACTIVE_CONNECTION_GET_PRIVATE (self);
-
-	g_return_if_fail (priv->assumed == FALSE);
-	priv->assumed = assumed;
-
-	if (priv->pending_activation_id) {
-		nm_device_remove_pending_action (priv->device, priv->pending_activation_id, TRUE);
-		g_clear_pointer (&priv->pending_activation_id, g_free);
-	}
-}
-
-gboolean
-nm_active_connection_get_assumed (NMActiveConnection *self)
-{
-	return NM_ACTIVE_CONNECTION_GET_PRIVATE (self)->assumed;
 }
 
 /*****************************************************************************/

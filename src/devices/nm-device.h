@@ -89,7 +89,6 @@
 #define NM_DEVICE_IP6_SUBNET_NEEDED     "ip6-subnet-needed"
 #define NM_DEVICE_REMOVED               "removed"
 #define NM_DEVICE_RECHECK_AUTO_ACTIVATE "recheck-auto-activate"
-#define NM_DEVICE_RECHECK_ASSUME        "recheck-assume"
 #define NM_DEVICE_STATE_CHANGED         "state-changed"
 #define NM_DEVICE_LINK_INITIALIZED      "link-initialized"
 #define NM_DEVICE_AUTOCONNECT_ALLOWED   "autoconnect-allowed"
@@ -442,7 +441,13 @@ gboolean nm_device_complete_connection (NMDevice *device,
 gboolean nm_device_check_connection_compatible (NMDevice *device, NMConnection *connection);
 gboolean nm_device_check_slave_connection_compatible (NMDevice *device, NMConnection *connection);
 
-gboolean nm_device_uses_assumed_connection (NMDevice *device);
+void nm_device_next_activation_set (NMDevice *self,
+                                    NMActivationType activation_type,
+                                    const char *connection_uuid_to_assume);
+NMActivationType nm_device_next_activation_steal (NMDevice *self,
+                                                  char **connection_uuid_to_assume);
+
+gboolean nm_device_is_assuming (NMDevice *device);
 
 gboolean nm_device_unmanage_on_quit (NMDevice *self);
 

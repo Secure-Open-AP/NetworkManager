@@ -158,11 +158,6 @@ void          nm_active_connection_set_master (NMActiveConnection *self,
 void          nm_active_connection_set_parent (NMActiveConnection *self,
                                                NMActiveConnection *parent);
 
-void          nm_active_connection_set_assumed (NMActiveConnection *self,
-                                                gboolean assumed);
-
-gboolean      nm_active_connection_get_assumed (NMActiveConnection *self);
-
 void          nm_active_connection_clear_secrets (NMActiveConnection *self);
 
 #endif /* __NETWORKMANAGER_ACTIVE_CONNECTION_H__ */
