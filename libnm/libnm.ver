@@ -1143,3 +1143,7 @@ global:
 	nm_utils_version;
 	nm_utils_is_valid_iface_name;
 } libnm_1_4_0;
+
+libnm_1_8_0 {
+	nm_setting_gsm_get_mtu;
+} libnm_1_6_0;
