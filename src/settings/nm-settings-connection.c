@@ -2483,7 +2483,7 @@ nm_settings_connection_get_autoconnect_retries (NMSettingsConnection *self)
 		priv->autoconnect_retries = retries;
 	}
 
-	return NM_SETTINGS_CONNECTION_GET_PRIVATE (self)->autoconnect_retries;
+	return priv->autoconnect_retries;
 }
 
 void
@@ -2492,7 +2492,10 @@ nm_settings_connection_set_autoconnect_retries (NMSettingsConnection *self,
 {
 	NMSettingsConnectionPrivate *priv = NM_SETTINGS_CONNECTION_GET_PRIVATE (self);
 
-	priv->autoconnect_retries = retries;
+	if (priv->autoconnect_retries != retries) {
+		_LOGT ("autoconnect-retires: set %d", retries);
+		priv->autoconnect_retries = retries;
+	}
 	if (retries)
 		priv->autoconnect_retry_time = 0;
 	else
