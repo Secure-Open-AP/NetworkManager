@@ -4323,6 +4323,8 @@ nm_setting_802_1x_class_init (NMSetting8021xClass *setting_class)
 	 *
 	 * A timeout for the authentication. Zero means the global default; if the
 	 * global default is not set, the authentication timeout is 25 seconds.
+	 *
+	 * Since: 1.8
 	 **/
 	/* ---ifcfg-rh---
 	 * property: auth-timeout
