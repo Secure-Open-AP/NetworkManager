@@ -1146,6 +1146,7 @@ global:
 
 libnm_1_8_0 {
 	nm_connection_get_setting_dummy;
+	nm_device_dummy_get_type;
 	nm_setting_dummy_get_type;
 	nm_setting_dummy_new;
 } libnm_1_6_0;
