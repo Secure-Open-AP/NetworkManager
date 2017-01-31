@@ -1143,3 +1143,9 @@ global:
 	nm_utils_version;
 	nm_utils_is_valid_iface_name;
 } libnm_1_4_0;
+
+libnm_1_8_0 {
+	nm_connection_get_setting_dummy;
+	nm_setting_dummy_get_type;
+	nm_setting_dummy_new;
+} libnm_1_6_0;
