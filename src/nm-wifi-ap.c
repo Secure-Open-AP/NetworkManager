@@ -55,6 +55,9 @@ typedef struct
 	NM80211ApFlags         flags;      /* General flags */
 	NM80211ApSecurityFlags wpa_flags;  /* WPA-related flags */
 	NM80211ApSecurityFlags rsn_flags;  /* RSN (WPA2) -related flags */
+#ifdef CONFIG_SOAP
+	gint8			soap;
+#endif /* CONFIG_SOAP */
 
 	/* Non-scanned attributes */
 	gboolean			fake;	/* Whether or not the AP is from a scan */
