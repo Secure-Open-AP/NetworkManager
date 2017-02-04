@@ -507,6 +507,18 @@ foreach_property_cb (gpointer key, gpointer value, gpointer user_data)
 			}
 		}
 	}
+#ifdef CONFIG_SOAP
+	else if (G_VALUE_HOLDS_CHAR (variant)) {
+		gchar val = g_value_get_schar(variant);
+		
+		if (strcmp(key, "SOAP") == 0) {
+			/* TODO: Currently, SOAP is simple true of false boolean
+			 * need to be somethinkg like WPA in case of open system
+			 */
+ 			nm_ap_set_soap_flags(ap, val);
+		}
+	}
+#endif
 }
 
 NMAccessPoint *
@@ -923,6 +935,22 @@ nm_ap_set_rsn_flags (NMAccessPoint *ap, NM80211ApSecurityFlags flags)
 		g_object_notify (G_OBJECT (ap), NM_AP_RSN_FLAGS);
 	}
 }
+
+#ifdef CONFIG_SOAP
+void
+nm_ap_set_soap_flags (NMAccessPoint *ap, NM80211ApSecurityFlags flags)
+{
+	NMAccessPointPrivate *priv;
+
+	g_return_if_fail (NM_IS_AP (ap));
+
+	priv = NM_AP_GET_PRIVATE (ap);
+	if (priv->soap != flags) {
+		priv->soap = flags;
+		g_object_notify(G_OBJECT (ap), NM_AP_SOAP_FLAGS);
+	}
+}
+#endif /* CONFIG_SOAP */
 
 /*
  * Get/set functions for address
