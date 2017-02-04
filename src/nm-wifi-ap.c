@@ -89,6 +89,9 @@ enum {
 	PROP_MODE,
 	PROP_MAX_BITRATE,
 	PROP_STRENGTH,
+#ifdef CONFIG_SOAP
+	PROP_SOAP_FLAGS,
+#endif /* CONFIG_SOAP */
 	LAST_PROP
 };
 
@@ -151,6 +154,11 @@ set_property (GObject *object, guint prop_id,
 		break;
 	case PROP_HW_ADDRESS:
 		break;
+#ifdef CONFIG_SOAP
+	case PROP_SOAP_FLAGS:
+		nm_ap_set_soap_flags (ap, g_value_get_schar (value));
+		break;
+#endif /* CONFIG_SOAP */
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		break;
@@ -199,6 +207,11 @@ get_property (GObject *object, guint prop_id,
 	case PROP_STRENGTH:
 		g_value_set_schar (value, priv->strength);
 		break;
+#ifdef CONFIG_SOAP
+	case PROP_SOAP_FLAGS:
+		g_value_set_schar (value, priv->soap);
+		break;
+#endif /* CONFIG_SOAP */
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		break;
@@ -258,6 +271,17 @@ nm_ap_class_init (NMAccessPointClass *ap_class)
 							all_sec_flags,
 							NM_802_11_AP_SEC_NONE,
 							G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+
+#ifdef CONFIG_SOAP
+	g_object_class_install_property
+		(object_class, PROP_SOAP_FLAGS,
+		 g_param_spec_char (NM_AP_SOAP_FLAGS,
+						   "SOAP",
+						   "SOAP",
+							 /* TODO: define the following values as macro */
+						   0, 1, 0,
+						   G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+#endif /* CONFIG_SOAP */
 
 	g_object_class_install_property
 		(object_class, PROP_SSID,

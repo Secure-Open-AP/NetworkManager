@@ -43,6 +43,9 @@
 #define NM_AP_MODE "mode"
 #define NM_AP_MAX_BITRATE "max-bitrate"
 #define NM_AP_STRENGTH "strength"
+#ifdef CONFIG_SOAP
+#define NM_AP_SOAP_FLAGS "soap-flags"
+#endif /* CONFIG_SOAP */
 
 typedef struct {
 	GObject parent;
