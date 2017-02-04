@@ -542,7 +542,7 @@ foreach_property_cb (gpointer key, gpointer value, gpointer user_data)
  			nm_ap_set_soap_flags(ap, val);
 		}
 	}
-#endif
+#endif /* CONFIG_SOAP */
 }
 
 NMAccessPoint *
