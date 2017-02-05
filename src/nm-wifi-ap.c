@@ -56,7 +56,7 @@ typedef struct
 	NM80211ApSecurityFlags wpa_flags;  /* WPA-related flags */
 	NM80211ApSecurityFlags rsn_flags;  /* RSN (WPA2) -related flags */
 #ifdef CONFIG_SOAP
-	gint8			soap;
+	gint8			soap_flags;
 #endif /* CONFIG_SOAP */
 
 	/* Non-scanned attributes */
@@ -209,7 +209,7 @@ get_property (GObject *object, guint prop_id,
 		break;
 #ifdef CONFIG_SOAP
 	case PROP_SOAP_FLAGS:
-		g_value_set_schar (value, priv->soap);
+		g_value_set_schar (value, priv->soap_flags);
 		break;
 #endif /* CONFIG_SOAP */
 	default:
@@ -969,8 +969,8 @@ nm_ap_set_soap_flags (NMAccessPoint *ap, NM80211ApSecurityFlags flags)
 	g_return_if_fail (NM_IS_AP (ap));
 
 	priv = NM_AP_GET_PRIVATE (ap);
-	if (priv->soap != flags) {
-		priv->soap = flags;
+	if (priv->soap_flags != flags) {
+		priv->soap_flags = flags;
 		g_object_notify(G_OBJECT (ap), NM_AP_SOAP_FLAGS);
 	}
 }
