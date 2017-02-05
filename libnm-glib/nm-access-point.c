@@ -155,6 +155,17 @@ nm_access_point_get_rsn_flags (NMAccessPoint *ap)
 	return NM_ACCESS_POINT_GET_PRIVATE (ap)->rsn_flags;
 }
 
+#ifdef CONFIG_SOAP
+gint8
+nm_access_point_get_soap_flags (NMAccessPoint *ap)
+{
+	g_return_val_if_fail (NM_IS_ACCESS_POINT (ap), 0);
+
+	_nm_object_ensure_inited (NM_OBJECT (ap));
+	return NM_ACCESS_POINT_GET_PRIVATE (ap)->soap_flags;
+}
+#endif /* CONFIG_SOAP */
+
 /**
  * nm_access_point_get_ssid:
  * @ap: a #NMAccessPoint

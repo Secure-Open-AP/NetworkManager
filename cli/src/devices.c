@@ -204,9 +204,16 @@ static NmcOutputField nmc_fields_dev_wifi_list[] = {
 	{"DEVICE",     N_("DEVICE"),      10, NULL, 0},  /* 10 */
 	{"ACTIVE",     N_("ACTIVE"),       8, NULL, 0},  /* 11 */
 	{"DBUS-PATH",  N_("DBUS-PATH"),   46, NULL, 0},  /* 12 */
+#ifdef CONFIG_SOAP
+	{"SOAP",       "SOAP",             5, NULL, 0},  /* 13 */
+#endif /* CONFIG_SOAP */
 	{NULL,         NULL,               0, NULL, 0}
 };
+#ifndef CONFIG_SOAP
 #define NMC_FIELDS_DEV_WIFI_LIST_ALL           "SSID,BSSID,MODE,FREQ,RATE,SIGNAL,SECURITY,WPA-FLAGS,RSN-FLAGS,DEVICE,ACTIVE,DBUS-PATH"
+#else
+#define NMC_FIELDS_DEV_WIFI_LIST_ALL           "SSID,BSSID,MODE,FREQ,RATE,SIGNAL,SECURITY,WPA-FLAGS,RSN-FLAGS,DEVICE,ACTIVE,DBUS-PATH,SOAP"
+#endif /* CONFIG_SOAP */
 #define NMC_FIELDS_DEV_WIFI_LIST_COMMON        "SSID,BSSID,MODE,FREQ,RATE,SIGNAL,SECURITY,ACTIVE"
 #define NMC_FIELDS_DEV_WIFI_LIST_FOR_DEV_LIST  "NAME,"NMC_FIELDS_DEV_WIFI_LIST_COMMON
 
@@ -371,6 +378,21 @@ ap_wpa_rsn_flags_to_string (NM80211ApSecurityFlags flags)
 	return ret_str;
 }
 
+#ifdef CONFIG_SOAP
+static char *
+ap_wpa_soap_flags_to_string (gint8 flags)
+{
+	char *ret_str;
+
+	if (flags)
+		ret_str = g_strdup("SOAP");
+	else
+		ret_str = g_strdup("-");
+
+	return ret_str;
+}
+#endif /* CONFIG_SOAP */
+
 typedef struct {
 	NmCli *nmc;
 	int index;
@@ -394,6 +416,10 @@ detail_access_point (gpointer data, gpointer user_data)
 	char *freq_str, *ssid_str, *bitrate_str, *strength_str, *wpa_flags_str, *rsn_flags_str;
 	GString *security_str;
 	char *ap_name;
+#ifdef CONFIG_SOAP
+	gint8 soap_flags;
+	char *soap_flags_str;
+#endif /* CONFIG_SOAP */
 
 	if (info->active_bssid) {
 		const char *current_bssid = nm_access_point_get_bssid (ap);
@@ -411,6 +437,9 @@ detail_access_point (gpointer data, gpointer user_data)
 	mode = nm_access_point_get_mode (ap);
 	bitrate = nm_access_point_get_max_bitrate (ap);
 	strength = nm_access_point_get_strength (ap);
+#ifdef CONFIG_SOAP
+	soap_flags = nm_access_point_get_soap_flags (ap);
+#endif /* CONFIG_SOAP */
 
 	/* Convert to strings */
 	ssid_str = ssid_to_printable ((const char *) ssid->data, ssid->len);
@@ -419,6 +448,9 @@ detail_access_point (gpointer data, gpointer user_data)
 	strength_str = g_strdup_printf ("%u", strength);
 	wpa_flags_str = ap_wpa_rsn_flags_to_string (wpa_flags);
 	rsn_flags_str = ap_wpa_rsn_flags_to_string (rsn_flags);
+#ifdef CONFIG_SOAP
+	soap_flags_str = ap_wpa_soap_flags_to_string (soap_flags);
+#endif /* CONFIG_SOAP */
 
 	security_str = g_string_new (NULL);
 	if (   !(flags & NM_802_11_AP_FLAGS_PRIVACY)
@@ -457,6 +489,9 @@ detail_access_point (gpointer data, gpointer user_data)
 	info->nmc->allowed_fields[10].value = info->device;
 	info->nmc->allowed_fields[11].value = active ? _("yes") : _("no");
 	info->nmc->allowed_fields[12].value = nm_object_get_path (NM_OBJECT (ap));
+#ifdef CONFIG_SOAP
+	info->nmc->allowd_fields[13].value = soap_flags_str;
+#endif /* CONFIG_SOAP */
 
 	info->nmc->print_fields.flags &= ~NMC_PF_FLAG_MAIN_HEADER_ADD & ~NMC_PF_FLAG_MAIN_HEADER_ONLY & ~NMC_PF_FLAG_FIELD_NAMES; /* Clear header flags */
 	print_fields (info->nmc->print_fields, info->nmc->allowed_fields);
