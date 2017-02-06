@@ -490,7 +490,7 @@ detail_access_point (gpointer data, gpointer user_data)
 	info->nmc->allowed_fields[11].value = active ? _("yes") : _("no");
 	info->nmc->allowed_fields[12].value = nm_object_get_path (NM_OBJECT (ap));
 #ifdef CONFIG_SOAP
-	info->nmc->allowd_fields[13].value = soap_flags_str;
+	info->nmc->allowed_fields[13].value = soap_flags_str;
 #endif /* CONFIG_SOAP */
 
 	info->nmc->print_fields.flags &= ~NMC_PF_FLAG_MAIN_HEADER_ADD & ~NMC_PF_FLAG_MAIN_HEADER_ONLY & ~NMC_PF_FLAG_FIELD_NAMES; /* Clear header flags */
