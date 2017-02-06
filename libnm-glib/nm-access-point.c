@@ -54,6 +54,9 @@ typedef struct {
 	NM80211Mode mode;
 	guint32 max_bitrate;
 	guint8 strength;
+#ifdef CONFIG_SOAP
+	gint8 soap_flags;
+#endif /* CONFIG_SOAP */
 } NMAccessPointPrivate;
 
 enum {
