@@ -18,6 +18,7 @@ global:
 	nm_access_point_get_strength;
 	nm_access_point_get_type;
 	nm_access_point_get_wpa_flags;
+	nm_access_point_get_soap_flags;
 	nm_access_point_new;
 	nm_active_connection_get_connection;
 	nm_active_connection_get_default6;
