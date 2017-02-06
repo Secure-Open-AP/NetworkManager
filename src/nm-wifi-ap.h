@@ -82,6 +82,9 @@ void                   nm_ap_set_wpa_flags (NMAccessPoint *ap, NM80211ApSecurity
 
 NM80211ApSecurityFlags nm_ap_get_rsn_flags	(NMAccessPoint *ap);
 void                   nm_ap_set_rsn_flags  (NMAccessPoint *ap, NM80211ApSecurityFlags flags);
+#ifdef CONFIG_SOAP
+void                   nm_ap_set_soap_flags (NMAccessPoint *ap, gchar flags);
+#endif /* CONFIG_SOAP */
 
 const struct ether_addr * nm_ap_get_address	(const NMAccessPoint *ap);
 void				nm_ap_set_address		(NMAccessPoint *ap, const struct ether_addr *addr);
