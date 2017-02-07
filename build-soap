@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+CFLAGS="-DCONFIG_SOAP" \
+./autogen.sh \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --enable-ifupdown \
+    --enable-ppp \
+    --with-dhclient=yes \
+    --with-resolvconf=yes \
+> $0.log 2>&1 &&
+make &&
+make check
+
+#    --enable-polkit \
+#    --enable-modify-system \
