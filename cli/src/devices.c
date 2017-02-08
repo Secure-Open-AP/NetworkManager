@@ -386,9 +386,9 @@ ap_wpa_soap_flags_to_string (gint8 flags)
 	char *ret_str;
 
 	if (flags)
-		ret_str = g_strdup("SOAP");
+		ret_str = g_strdup("yes");
 	else
-		ret_str = g_strdup("-");
+		ret_str = g_strdup("no");
 
 	return ret_str;
 }
