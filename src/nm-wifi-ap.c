@@ -105,6 +105,9 @@ nm_ap_init (NMAccessPoint *ap)
 	priv->flags = NM_802_11_AP_FLAGS_NONE;
 	priv->wpa_flags = NM_802_11_AP_SEC_NONE;
 	priv->rsn_flags = NM_802_11_AP_SEC_NONE;
+#ifdef CONFIG_SOAP
+	priv->soap_flags = 0;
+#endif /* CONFIG_SOAP */
 	priv->broadcast = TRUE;
 }
 
