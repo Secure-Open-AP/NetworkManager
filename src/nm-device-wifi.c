@@ -1952,6 +1952,9 @@ merge_scanned_ap (NMDeviceWifi *self,
 		nm_ap_set_broadcast (found_ap, nm_ap_get_broadcast (merge_ap));
 		nm_ap_set_freq (found_ap, nm_ap_get_freq (merge_ap));
 		nm_ap_set_max_bitrate (found_ap, nm_ap_get_max_bitrate (merge_ap));
+#ifdef CONFIG_SOAP
+		nm_ap_set_soap_flags (found_ap, nm_ap_get_soap_flags (merge_ap));
+#endif /* CONFIG_SOAP */
 
 		/* If the AP is noticed in a scan, it's automatically no longer
 		 * fake, since it clearly exists somewhere.
