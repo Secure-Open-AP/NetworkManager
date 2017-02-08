@@ -961,6 +961,15 @@ nm_ap_set_rsn_flags (NMAccessPoint *ap, NM80211ApSecurityFlags flags)
 }
 
 #ifdef CONFIG_SOAP
+gchar
+nm_ap_get_soap_flags (NMAccessPoint *ap)
+{
+	g_return_val_if_fail (NM_IS_AP (ap), NM_802_11_AP_SEC_NONE);
+
+	return NM_AP_GET_PRIVATE (ap)->soap_flags;
+}
+
+
 void
 nm_ap_set_soap_flags (NMAccessPoint *ap, gchar flags)
 {
