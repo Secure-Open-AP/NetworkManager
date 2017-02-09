@@ -17,6 +17,9 @@ make &&
 make check &&
 sudo make install &&
 sudo service network-manager restart
+if [ -n "$CLEARSYSLOG" ]; then
+echo "" | sudo tee /var/log/syslog
+fi
 
 #    --enable-polkit \
 #    --enable-modify-system \
