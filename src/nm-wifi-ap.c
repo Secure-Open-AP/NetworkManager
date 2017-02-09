@@ -159,7 +159,7 @@ set_property (GObject *object, guint prop_id,
 		break;
 #ifdef CONFIG_SOAP
 	case PROP_SOAP_FLAGS:
-		nm_ap_set_soap_flags (ap, g_value_get_schar (value));
+		nm_ap_set_soap_flags (ap, g_value_get_int (value));
 		break;
 #endif /* CONFIG_SOAP */
 	default:
@@ -212,7 +212,7 @@ get_property (GObject *object, guint prop_id,
 		break;
 #ifdef CONFIG_SOAP
 	case PROP_SOAP_FLAGS:
-		g_value_set_schar (value, priv->soap_flags);
+		g_value_set_int (value, priv->soap_flags);
 		break;
 #endif /* CONFIG_SOAP */
 	default:
@@ -278,7 +278,7 @@ nm_ap_class_init (NMAccessPointClass *ap_class)
 #ifdef CONFIG_SOAP
 	g_object_class_install_property
 		(object_class, PROP_SOAP_FLAGS,
-		 g_param_spec_char (NM_AP_SOAP_FLAGS,
+		 g_param_spec_int (NM_AP_SOAP_FLAGS,
 						   "SOAP",
 						   "SOAP",
 							 /* TODO: define the following values as macro */
@@ -780,6 +780,9 @@ nm_ap_new_fake_from_connection (NMConnection *connection)
 		/* Don't use Ad-Hoc RSN yet */
 		nm_ap_set_rsn_flags (ap, NM_802_11_AP_SEC_NONE);
 	}
+#ifdef CONFIG_SOAP
+	nm_ap_set_soap_flags(ap, 0);
+#endif /* CONFIG_SOAP */
 
 done:
 	return ap;
@@ -964,10 +967,10 @@ nm_ap_set_rsn_flags (NMAccessPoint *ap, NM80211ApSecurityFlags flags)
 }
 
 #ifdef CONFIG_SOAP
-gchar
+gint8
 nm_ap_get_soap_flags (NMAccessPoint *ap)
 {
-	g_return_val_if_fail (NM_IS_AP (ap), NM_802_11_AP_SEC_NONE);
+	g_return_val_if_fail (NM_IS_AP (ap), 0);
 
 	return NM_AP_GET_PRIVATE (ap)->soap_flags;
 }

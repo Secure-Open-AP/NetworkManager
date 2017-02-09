@@ -516,7 +516,7 @@ get_property (GObject *object,
 		break;
 #ifdef CONFIG_SOAP
 	case PROP_SOAP_FLAGS:
-		g_value_set_schar (value, nm_access_point_get_soap_flags (ap));
+		g_value_set_int (value, nm_access_point_get_soap_flags (ap));
 		break;
 #endif /* CONFIG_SOAP */
 	default:
@@ -637,7 +637,7 @@ nm_access_point_class_init (NMAccessPointClass *ap_class)
 #ifdef CONFIG_SOAP
 	g_object_class_install_property
 		(object_class, PROP_SOAP_FLAGS,
-		 g_param_spec_uint (NM_ACCESS_POINT_SOAP_FLAGS,
+		 g_param_spec_int (NM_ACCESS_POINT_SOAP_FLAGS,
 		                    "SOAP Flags",
 											  "SOAP Flags",
 											  0, 1, 0,
