@@ -48,6 +48,9 @@ G_BEGIN_DECLS
 #define NM_ACCESS_POINT_MODE        "mode"
 #define NM_ACCESS_POINT_MAX_BITRATE "max-bitrate"
 #define NM_ACCESS_POINT_STRENGTH    "strength"
+#ifdef CONFIG_SOAP
+#define NM_ACCESS_POINT_SOAP_FLAGS "soap-flags"
+#endif /* CONFIG_SOAP */
 
 /* DEPRECATED */
 #define NM_ACCESS_POINT_HW_ADDRESS  "hw-address"

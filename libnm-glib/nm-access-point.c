@@ -71,6 +71,9 @@ enum {
 	PROP_MAX_BITRATE,
 	PROP_STRENGTH,
 	PROP_BSSID,
+#ifdef CONFIG_SOAP
+	PROP_SOAP_FLAGS,
+#endif /* CONFIG_SOAP */
 
 	LAST_PROP
 };
@@ -84,6 +87,9 @@ enum {
 #define DBUS_PROP_MODE "Mode"
 #define DBUS_PROP_MAX_BITRATE "MaxBitrate"
 #define DBUS_PROP_STRENGTH "Strength"
+#ifdef CONFIG_SOAP
+#define DBUS_PROP_SOAP_FLAGS "SoapFlags"
+#endif
 
 /**
  * nm_access_point_new:
@@ -508,6 +514,11 @@ get_property (GObject *object,
 	case PROP_STRENGTH:
 		g_value_set_uchar (value, nm_access_point_get_strength (ap));
 		break;
+#ifdef CONFIG_SOAP
+	case PROP_SOAP_FLAGS:
+		g_value_set_schar (value, nm_access_point_get_soap_flags (ap));
+		break;
+#endif /* CONFIG_SOAP */
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		break;
@@ -538,6 +549,9 @@ register_properties (NMAccessPoint *ap)
 		{ NM_ACCESS_POINT_MODE,        &priv->mode },
 		{ NM_ACCESS_POINT_MAX_BITRATE, &priv->max_bitrate },
 		{ NM_ACCESS_POINT_STRENGTH,    &priv->strength },
+#ifdef CONFIG_SOAP
+		{ NM_ACCESS_POINT_SOAP_FLAGS,  &priv->soap_flags },
+#endif /* CONFIG_SOAP */
 		{ NULL },
 	};
 
@@ -619,6 +633,16 @@ nm_access_point_class_init (NMAccessPointClass *ap_class)
 		                    "RSN Flags",
 		                    0, G_MAXUINT32, 0,
 		                    G_PARAM_READABLE));
+
+#ifdef CONFIG_SOAP
+	g_object_class_install_property
+		(object_class, PROP_SOAP_FLAGS,
+		 g_param_spec_uint (NM_ACCESS_POINT_SOAP_FLAGS,
+		                    "SOAP Flags",
+											  "SOAP Flags",
+											  0, 1, 0,
+											  G_PARAM_READABLE));
+#endif /* CONFIG_SOAP */
 
 	/**
 	 * NMAccessPoint:ssid:
