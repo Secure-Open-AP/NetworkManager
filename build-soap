@@ -15,11 +15,15 @@ CFLAGS="-DCONFIG_SOAP" \
 fi
 make &&
 make check &&
-sudo make install &&
-sudo service network-manager restart
+sudo service network-manager stop
 if [ -n "$CLEARSYSLOG" ]; then
 echo "" | sudo tee /var/log/syslog
+  if [ "$?" -ne 0 ]; then
+  exit 1;
+  fi
 fi
+sudo make install &&
+sudo service network-manager start
 
 #    --enable-polkit \
 #    --enable-modify-system \
