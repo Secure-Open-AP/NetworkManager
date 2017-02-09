@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+if [ -z "$SKIPAUTOGEN" ]; then
 CFLAGS="-DCONFIG_SOAP" \
 ./autogen.sh \
     --prefix=/usr \
@@ -7,10 +8,15 @@ CFLAGS="-DCONFIG_SOAP" \
     --enable-ifupdown \
     --enable-ppp \
     --with-dhclient=yes \
-    --with-resolvconf=yes \
-> $0.log 2>&1 &&
+    --with-resolvconf=yes
+  if [ "$?" -ne 0 ]; then
+  exit 1;
+  fi
+fi
 make &&
-make check
+make check &&
+sudo make install &&
+sudo service network-manager restart
 
 #    --enable-polkit \
 #    --enable-modify-system \
