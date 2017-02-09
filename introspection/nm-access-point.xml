@@ -11,6 +11,11 @@
     <property name="RsnFlags" type="u" access="read" tp:type="NM_802_11_AP_SEC">
       <tp:docstring>Flags describing the access point's capabilities according to the RSN (Robust Secure Network) protocol.</tp:docstring>
     </property>
+    <!-- CONFIG_SOAP -->
+    <property name="SoapFlags" type="y" access="read">
+      <tp:docstring>Flags describing the access point's capabilities according to the SOAP (Secure Open Access Point) protocol.</tp:docstring>
+    </property>
+    <!-- CONFIG_SOAP -->
     <property name="Ssid" type="ay" access="read">
       <tp:docstring>The Service Set Identifier identifying the access point.</tp:docstring>
     </property>
