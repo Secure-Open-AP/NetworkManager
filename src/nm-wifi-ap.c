@@ -515,6 +515,15 @@ foreach_property_cb (gpointer key, gpointer value, gpointer user_data)
 
 		if (!strcmp (key, "Signal"))
 			nm_ap_set_strength (ap, nm_ap_utils_level_to_quality (val));
+
+#ifdef CONFIG_SOAP
+		if (!strcmp(key, "SOAP")) {
+			/* TODO: Currently, SOAP is simple true of false boolean
+			 * need to be somethinkg like WPA in case of open system
+			 */
+			nm_ap_set_soap_flags(ap, val);
+		}
+#endif /* CONFIG_SOAP */
 	} else if (G_VALUE_HOLDS_STRING (variant)) {
 		const char *val = g_value_get_string (variant);
 
@@ -534,18 +543,6 @@ foreach_property_cb (gpointer key, gpointer value, gpointer user_data)
 			}
 		}
 	}
-#ifdef CONFIG_SOAP
-	else if (G_VALUE_HOLDS_CHAR (variant)) {
-		gchar val = g_value_get_schar(variant);
-		
-		if (strcmp(key, "SOAP") == 0) {
-			/* TODO: Currently, SOAP is simple true of false boolean
-			 * need to be somethinkg like WPA in case of open system
-			 */
- 			nm_ap_set_soap_flags(ap, val);
-		}
-	}
-#endif /* CONFIG_SOAP */
 }
 
 NMAccessPoint *
