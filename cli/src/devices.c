@@ -1696,6 +1696,9 @@ do_device_wifi_connect_network (NmCli *nmc, int argc, char **argv)
 	const char *bssid = NULL;
 	const char *password = NULL;
 	const char *con_name = NULL;
+#ifdef CONFIG_SOAP
+	gboolean soap = FALSE;
+#endif /* CONFIG_SOAP */
 	gboolean private = FALSE;
 	gboolean wait = TRUE;
 	gboolean wep_passphrase = FALSE;
@@ -1775,6 +1778,10 @@ do_device_wifi_connect_network (NmCli *nmc, int argc, char **argv)
 				goto error;
 			}
 			con_name = *argv;
+#ifdef CONFIG_SOAP
+		} else if (strcmp (*argv, "soap") == 0) {
+			soap = TRUE;
+#endif /* CONFIG_SOAP */
 		} else if (strcmp (*argv, "--private") == 0) {
 			private = TRUE;
 		} else if (strcmp (*argv, "--nowait") == 0) {
