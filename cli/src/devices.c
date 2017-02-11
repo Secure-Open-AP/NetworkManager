@@ -1926,6 +1926,20 @@ do_device_wifi_connect_network (NmCli *nmc, int argc, char **argv)
 		// clutter the command. However, that could be solved later by
 		// implementing add/edit connections support for nmcli.
 	}
+#ifdef CONFIG_SOAP
+	else if (soap) {
+		if (flags & NM_802_11_AP_FLAGS_PRIVACY) {
+			if (wpa_flags == NM_802_11_AP_SEC_NONE && rsn_flags == NM_802_11_AP_SEC_NONE) {
+				/*
+				 * TODO: Currently works only for WPA-PSK
+				 */
+				s_wsec = (NMSettingWirelessSecurity *) nm_setting_wireless_security_new ();
+				nm_connection_add_setting (connection, NM_SETTING (s_wsec));
+				g_object_set (s_wsec, NM_SETTING_WIRELESS_SECURITY_SOAP, "yes", NULL);
+			}
+		}
+	}
+#endif /* CONFIG_SOAP */
 
 	/* nowait_flag indicates user input. should_wait says whether quit in start().
 	 * We have to delay exit after add_and_activate_cb() is called, even if

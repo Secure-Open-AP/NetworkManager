@@ -116,6 +116,9 @@ typedef enum {
 #define NM_SETTING_WIRELESS_SECURITY_PSK_FLAGS "psk-flags"
 #define NM_SETTING_WIRELESS_SECURITY_LEAP_PASSWORD "leap-password"
 #define NM_SETTING_WIRELESS_SECURITY_LEAP_PASSWORD_FLAGS "leap-password-flags"
+#ifdef CONFIG_SOAP
+#define NM_SETTING_WIRELESS_SECURITY_SOAP "soap"
+#endif /* CONFIG_SOAP */
 
 typedef struct {
 	NMSetting parent;
